@@ -1,7 +1,8 @@
 const mysql = require('mysql2/promise');
+require('dotenv').config();
 
 const pool = mysql.createPool({
-  host: '127.0.0.1',
+  port: '3306',
   user: 'root',
   password: 'DrewsBrews',
   database: 'employee_db',
@@ -11,7 +12,8 @@ const pool = mysql.createPool({
 });
 
 module.exports = {
-  query: (sql, values) => {
-    return pool.execute(sql, values);
+  query: async function (sql, values) {
+    const [rows] = await pool.execute(sql, values);
+    return rows;
   }
 };
